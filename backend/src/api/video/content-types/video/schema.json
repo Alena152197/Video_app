@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos",
+  "info": {
+    "singularName": "video",
+    "pluralName": "videos",
+    "displayName": "Video"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "iframe": {
+      "type": "text",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "views": {
+      "type": "integer",
+      "required": false,
+      "default": 0
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "videos"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "videos"
+    },
+    "playlists": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::playlist.playlist",
+      "mappedBy": "videos"
+    },
+    "histories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::history.history",
+      "mappedBy": "videos"
+    }
+  }
+}
