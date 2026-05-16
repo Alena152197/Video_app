@@ -66,11 +66,15 @@ const handleLogin = async () => {
 
     try {
         // Имитация задержки API
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        await new Promise(resolve => setTimeout(resolve, 1000))
 
-        console.log('Попытка входа:', { email: email.value, password: password.value })
-    } catch (e) {
+        console.log('Попытка входа:', {
+            email: email.value,
+            password: password.value 
+        })
+    } catch (error) {
         errorMessage.value = 'Неверный логин или пароль'
+        console.error(error)
     } finally {
         isLoading.value = false
     }

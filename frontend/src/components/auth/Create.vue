@@ -68,9 +68,10 @@
 </template>
 
 <script setup>
-import router from '@/router'
 import { ref, reactive } from 'vue'
+import { useUserStore } from '@/stores/counter';
 
+const store = useUserStore()
 const form = reactive({
     name: '',
     username: '',
@@ -81,32 +82,9 @@ const form = reactive({
 
 const isLoading = ref(false)
 const errorMessage = ref('')
-const successMessage = ref('')
 
 const handleRegister = async () => {
     errorMessage.value = ''
-    successMessage.value = ''
-
-    // Валидация username
-    if (!form.username || form.username.length < 3) {
-        errorMessage.value = 'Логин должен содержать минимум 3 символа'
-        return
-    }
-    if (!/^[a-zA-Z0-9_-]{3,20}$/.test(form.username)) {
-        errorMessage.value = 'Логин может содержать только латиницу, цифры, _ и -'
-        return
-    }
-
-    // Простая клиентская валидация паролей
-    if (form.password !== form.confirmPassword) {
-        errorMessage.value = 'Пароли не совпадают'
-        return
-    }
-    if (form.password.length < 6) {
-        errorMessage.value = 'Пароль должен содержать минимум 6 символов'
-        return
-    }
-
     isLoading.value = true
 
     const token = import.meta.env.VITE_STRAPI_API_PUBLIC
@@ -125,17 +103,18 @@ const handleRegister = async () => {
             })
         })
 
-        const data = res.json()
+        if (res.ok) {
+            const data = await res.json()
+            store.isAuth = true;
+            store.user = data.user
 
-        console.log(data)
-        successMessage.value = 'Регистрация успешна! Перенаправляем на вход...'
-
-        form.name = ''; form.username = '', form.email = '', form.password = '', form.confirmPassword = ''
-        router.push('/')
+            console.log(data)
+            router.push('/')
+        }
     } catch (error) {
-        errorMessage.value = 'Ошибка сервера. Попробуйте снова.'
         console.error(error)
     } finally {
+        form.name = ''; form.username = '', form.email = '', form.password = '', form.confirmPassword = ''
         isLoading.value = false
     }
 }
