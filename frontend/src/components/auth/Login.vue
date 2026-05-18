@@ -1,4 +1,4 @@
-<!-- frontend/src/components/auth/Login.vue -->
+<!-- компонент авторизации -->
 <template>
     <div class="text-center">
         <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">

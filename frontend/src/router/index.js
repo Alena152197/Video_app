@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Index.vue'
 import Auth from '@/views/Auth.vue'
+import TodoPractice from '@/views/TodoPractice.vue'
 
 
 
@@ -14,6 +15,10 @@ const router = createRouter({
         {
       path: '/auth', 
       component: Auth
+    },
+    {
+      path: '/practice',
+      component: TodoPractice
     },
   ],
 })

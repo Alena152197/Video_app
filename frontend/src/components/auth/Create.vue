@@ -1,4 +1,4 @@
-<!-- frontend/src/components/auth/Create.vue -->
+<!-- компонент регистрации -->
 <template>
     <div class="text-center">
         <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">
@@ -57,7 +57,7 @@
 
         <div>
             <button type="submit" :disabled="isLoading"
-                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed">
                 {{ isLoading ? 'Регистрация...' : 'Зарегистрироваться' }}
             </button>
         </div>
@@ -88,13 +88,13 @@ const handleRegister = async () => {
     isLoading.value = true
 
     const token = import.meta.env.VITE_STRAPI_API_PUBLIC
-
+    console.log(token);
     try {
         const res = await fetch('http://localhost:1337/api/auth/local/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 username: form.username,
